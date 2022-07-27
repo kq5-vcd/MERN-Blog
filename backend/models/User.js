@@ -27,7 +27,12 @@ const userSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "User",
         required: true
-    }]
+    }],
+    authId: {
+        type: String,
+        required: false,
+        defaul: ""
+    }
 })
 
 export default mongoose.model('User', userSchema)

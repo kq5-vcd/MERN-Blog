@@ -1,5 +1,4 @@
 import express from "express";
-//import User from "../models/User"
 import { getAllUsers, signup, login, subscribe, cancelSubscribe } from "../controllers/user-controller";
 
 const userRouter = express.Router()
