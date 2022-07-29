@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  AppBar,
-  Typography,
-  Toolbar,
-  Box,
-  Button,
-  Tabs,
-  Tab,
-} from "@mui/material";
+import { AppBar, Typography, Toolbar, Box, Button, Tabs, Tab } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store";
@@ -23,12 +15,12 @@ const Header = () => {
       position="sticky"
       sx={{
         background:
-          "linear-gradient(90deg, rgba(58,75,180,1) 2%, rgba(116,49,110,1) 36%, rgba(2,0,161,1) 73%, rgba(69,92,252,1) 100%)",
+          "linear-gradient(0deg, rgba(74,255,0,1) 0%, rgba(61,213,160,1) 36%, rgba(34,193,195,1) 100%)",
       }}
     >
       <Toolbar>
         <Typography className={classes.font} variant="h4">
-          BlogsApp
+          PremiumThoughts
         </Typography>
         {isLoggedIn && (
           <Box display="flex" marginLeft={"auto"} marginRight="auto">
@@ -66,8 +58,7 @@ const Header = () => {
                 LinkComponent={Link}
                 to="/auth"
                 variant="contained"
-                sx={{ margin: 1, borderRadius: 10 }}
-                color="warning"
+                sx={{ margin: 1, borderRadius: 10, background: "#D65B3E" }}
               >
                 Login
               </Button>
@@ -75,8 +66,7 @@ const Header = () => {
                 LinkComponent={Link}
                 to="/auth"
                 variant="contained"
-                sx={{ margin: 1, borderRadius: 10 }}
-                color="warning"
+                sx={{ margin: 1, borderRadius: 10, background: "#D65B3E" }}
               >
                 Signup
               </Button>
@@ -88,8 +78,7 @@ const Header = () => {
               LinkComponent={Link}
               to="/auth"
               variant="contained"
-              sx={{ margin: 1, borderRadius: 10 }}
-              color="warning"
+              sx={{ margin: 1, borderRadius: 10, background: "#D65B3E" }}
             >
               Logout
             </Button>
