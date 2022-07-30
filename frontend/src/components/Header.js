@@ -15,13 +15,14 @@ const Header = () => {
       position="sticky"
       sx={{
         background:
-          "linear-gradient(0deg, rgba(74,255,0,1) 0%, rgba(61,213,160,1) 36%, rgba(34,193,195,1) 100%)",
+          "radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(46,171,219,1) 30%, rgba(28,252,185,1) 64%)",
       }}
     >
       <Toolbar>
-        <Typography className={classes.font} variant="h4">
+        <Typography className={classes.font} sx={{ color: "#B0840B" }} variant="h4">
           PremiumThoughts
         </Typography>
+
         {isLoggedIn && (
           <Box display="flex" marginLeft={"auto"} marginRight="auto">
             <Tabs
@@ -50,35 +51,37 @@ const Header = () => {
             </Tabs>
           </Box>
         )}
+
         <Box display="flex" marginLeft="auto">
           {!isLoggedIn && (
             <>
               {" "}
               <Button
                 LinkComponent={Link}
-                to="/auth"
+                to="/login"
                 variant="contained"
-                sx={{ margin: 1, borderRadius: 10, background: "#D65B3E" }}
+                sx={{ margin: 1, borderRadius: 10, background: "#E035FC" }}
               >
                 Login
               </Button>
               <Button
                 LinkComponent={Link}
-                to="/auth"
+                to="/register"
                 variant="contained"
-                sx={{ margin: 1, borderRadius: 10, background: "#D65B3E" }}
+                sx={{ margin: 1, borderRadius: 10, background: "#E035FC" }}
               >
                 Signup
               </Button>
             </>
           )}
+          
           {isLoggedIn && (
             <Button
               onClick={() => dispath(authActions.logout())}
               LinkComponent={Link}
-              to="/auth"
+              to="/"
               variant="contained"
-              sx={{ margin: 1, borderRadius: 10, background: "#D65B3E" }}
+              sx={{ margin: 1, borderRadius: 10, background: "#E035FC" }}
             >
               Logout
             </Button>

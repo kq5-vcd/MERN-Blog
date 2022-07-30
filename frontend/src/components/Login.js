@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../store";
 import { useNavigate } from "react-router-dom";
 
-const Auth = () => {
+const Login = () => {
   const naviagte = useNavigate();
   const dispath = useDispatch();
   const [inputs, setInputs] = useState({
@@ -112,4 +112,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default Login;

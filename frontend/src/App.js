@@ -3,12 +3,17 @@ import Blogs from "./components/Blogs";
 import UserBlogs from "./components/UserBlogs";
 import BlogDetail from "./components/BlogDetail";
 import AddBlog from "./components/AddBlog";
+import Home from "./components/Home";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import Auth from "./components/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "./store";
+
+import "./App.css";
+
 function App() {
   const dispath = useDispatch();
 
@@ -27,7 +32,10 @@ function App() {
       <main>
         <Routes>
           {!isLoggedIn ? (
-            <Route path="/auth" element={<Auth />} />
+            <>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </>
           ) : (
             <>
               <Route path="/blogs" element={<Blogs />} />
@@ -36,6 +44,8 @@ function App() {
               <Route path="/myBlogs/:id" element={<BlogDetail />} />{" "}
             </>
           )}
+
+          <Route path="/" element={<Home />} />
         </Routes>
       </main>
     </React.Fragment>
