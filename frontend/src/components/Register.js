@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { authActions } from "../store";
@@ -7,22 +7,18 @@ import { useNavigate } from "react-router-dom";
 import GoogleIcon from '@mui/icons-material/Google';
 
 const sendRequest = async (inputs) => {
-  if (inputs.password !== inputs.confirm) {
-    alert("Passwords don't match");
-  } else {
-    const res = await axios
-      .post(`http://localhost:2022/api/user/signup`, {
-        name: inputs.name,
-        email: inputs.email,
-        password: inputs.password,
-      })
-      .catch((err) => console.log(err));
+  const res = await axios
+    .post(`http://localhost:2022/api/user/signup`, {
+      name: inputs.name,
+      email: inputs.email,
+      password: inputs.password,
+    })
+    .catch((err) => console.log(err));
 
-    const data = await res.data;
-    console.log(data);
+  const data = await res.data;
+  console.log(data);
 
-    return data;
-  }
+  return data;
 };
 
 const oauth = async () => {
@@ -40,30 +36,82 @@ function Register() {
   const naviagte = useNavigate();
   const dispath = useDispatch();
 
-  const [inputs, setInputs] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirm: ""
-  });
-  
-  const handleChange = ({ target }) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [target.name]: target.value,
-    }));
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirm, setConfirm] = useState("")
 
-    console.log(inputs);
-  };
+  const [nameCheck, setNameCheck] = useState(true)
+  const [passCheck, setPassCheck] = useState(true)
+  const [confirmCheck, setConfirmCheck] = useState(true)
+
+  const firstMountName = useRef(true)
+  const firstMountPass = useRef(true)
+  const firstMountConfirm = useRef(true)
+
+  useEffect(() => {
+    if(firstMountName.current) {
+      firstMountName.current = false
+    } else {
+      if(name.length < 3) setNameCheck(false)
+      else setNameCheck(true)
+    }
+  }, [name])
+
+  useEffect(() => {
+    if(firstMountPass.current) {
+      firstMountPass.current = false
+    } else {
+      if(password.length < 6) setPassCheck(false)
+      else setPassCheck(true)
+    }
+  }, [password])
+
+  useEffect(() => {
+    if(firstMountConfirm.current) {
+      firstMountConfirm.current = false
+    } else {
+      if(password !== confirm) setConfirmCheck(false)
+      else setConfirmCheck(true)
+    }
+  }, [confirm])
+
+  const handleName = ({ target }) => {
+    setName(target.value)
+    console.log(name);
+  }
+
+  const handleEmail = ({ target }) => {
+    setEmail(target.value)
+    console.log(email);
+  }
+
+  const handlePassword = ({ target }) => {
+    setPassword(target.value)
+    console.log(password);
+  }
+
+  const handleConfirm = ({ target }) => {
+    setConfirm(target.value)
+    console.log(confirm);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let inputs = {
+      name,
+      email,
+      password
+    }
+
     console.log(inputs);
-    
-    sendRequest(inputs)
-      .then((data) => localStorage.setItem("userId", data.user._id))
-      .then(() => dispath(authActions.login()))
-      .then(() => naviagte("/blogs"));
+
+    if(nameCheck && passCheck && confirmCheck) {
+      sendRequest(inputs)
+        .then((data) => localStorage.setItem("userId", data.user._id))
+        .then(() => dispath(authActions.login()))
+        .then(() => naviagte("/blogs"));
+    }
   };
 
   return (
@@ -87,38 +135,48 @@ function Register() {
           </Typography>
 
           <TextField
+            required={true}
             name="name"
-            onChange={handleChange}
-            value={inputs.name}
+            onChange={handleName}
+            value={name}
             placeholder="Name"
             margin="normal"
+            error={!nameCheck}
+            helperText={nameCheck ? "" : "Username requires at least 3 characters"}
           />
 
           <TextField
+            required={true}
             name="email"
-            onChange={handleChange}
-            value={inputs.email}
+            onChange={handleEmail}
+            value={email}
             type={"email"}
             placeholder="Email"
             margin="normal"
           />
 
           <TextField
+            required={true}
             name="password"
-            onChange={handleChange}
-            value={inputs.password}
+            onChange={handlePassword}
+            value={password}
             type={"password"}
             placeholder="Password"
             margin="normal"
+            error={!passCheck}
+            helperText={passCheck ? "" : "Password requires at least 6 characters"}
           />
 
           <TextField
+            required={true}
             name="confirm"
-            onChange={handleChange}
-            value={inputs.confirm}
+            onChange={handleConfirm}
+            value={confirm}
             type={"password"}
             placeholder="Confirm password"
             margin="normal"
+            error={!confirmCheck}
+            helperText={confirmCheck ? "" : "Password doesn't match"}
           />
 
           <Button
