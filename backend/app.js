@@ -6,9 +6,11 @@ import blogRouter from "./routes/blog-routes"
 import oauthRouter from './routes/oauth-routes';
 import passport from './controllers/oath-controller'
 import { key } from './oauthKey';
+import cors from 'cors'
 
 const app = express()
 
+app.use(cors())
 // Middlewares
 app.use(express.json())
 

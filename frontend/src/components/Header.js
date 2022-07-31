@@ -11,6 +11,7 @@ const Header = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
   const [value, setValue] = useState();
+  
   return (
     <AppBar
       sx={{

@@ -19,11 +19,13 @@ function App() {
 
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   console.log(isLoggedIn);
+
   useEffect(() => {
     if (localStorage.getItem("userId")) {
       dispath(authActions.login());
     }
   }, [dispath]);
+  
   return (
     <React.Fragment>
       <header>
