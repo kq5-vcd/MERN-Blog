@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AppBar, Typography, Toolbar, Box, Button, Tabs, Tab } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store";
 import { useStyles } from "./utils";
@@ -11,6 +11,7 @@ const Header = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
   const [value, setValue] = useState();
+  const navigate = useNavigate()
   
   return (
     <AppBar
@@ -22,7 +23,12 @@ const Header = () => {
       }}
     >
       <Toolbar>
-        <Typography className={classes.font} sx={{ color: "#B0840B" }} variant="h4">
+        <Typography 
+          className={classes.font} 
+          sx={{ color: "#B0840B", cursor: "pointer" }} 
+          variant="h4" 
+          onClick={() => navigate("/")}
+        >
           PremiumThoughts
         </Typography>
 
