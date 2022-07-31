@@ -5,50 +5,59 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../store";
 import { useNavigate } from "react-router-dom";
 
+const sendRequest = async (inputs) => {
+  const res = await axios
+    .post(`http://localhost:2022/api/user/login`, {
+      name: inputs.name,
+      password: inputs.password,
+    })
+    .catch((err) => console.log(err));
+
+  const data = await res.data;
+  console.log(data);
+
+  return data;
+};
+
+const oauth = async () => {
+  const res = await axios
+    .get(`http://localhost:2022/api/oauth2/google`)
+    .catch((err) => console.log(err));
+
+  const data = await res.data;
+  console.log(data);
+
+  return data;
+}
+
 const Login = () => {
   const naviagte = useNavigate();
   const dispath = useDispatch();
+  
   const [inputs, setInputs] = useState({
     name: "",
-    email: "",
     password: "",
   });
-  const [isSignup, setIsSignup] = useState(false);
-  const handleChange = (e) => {
+  
+  const handleChange = ({ target }) => {
     setInputs((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [target.name]: target.value,
     }));
-  };
-  const sendRequest = async (type = "login") => {
-    const res = await axios
-      .post(`http://localhost:5000/api/user/${type}`, {
-        name: inputs.name,
-        email: inputs.email,
-        password: inputs.password,
-      })
-      .catch((err) => console.log(err));
 
-    const data = await res.data;
-    console.log(data);
-    return data;
+    console.log(inputs);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(inputs);
-    if (isSignup) {
-      sendRequest("signup")
-        .then((data) => localStorage.setItem("userId", data.user._id))
-        .then(() => dispath(authActions.login()))
-        .then(() => naviagte("/blogs"));
-    } else {
-      sendRequest()
-        .then((data) => localStorage.setItem("userId", data.user._id))
-        .then(() => dispath(authActions.login()))
-        .then(() => naviagte("/blogs"));
-    }
-  };
+    
+    sendRequest(inputs)
+      .then((data) => localStorage.setItem("userId", data.user._id))
+      .then(() => dispath(authActions.login()))
+      .then(() => naviagte("/blogs"));
+  }
+    
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -63,27 +72,21 @@ const Login = () => {
           margin="auto"
           marginTop={5}
           borderRadius={5}
+          backgroundColor="#FFFEFC"
         >
           <Typography variant="h2" padding={3} textAlign="center">
-            {isSignup ? "Signup" : "Login"}
+            Login
           </Typography>
-          {isSignup && (
-            <TextField
-              name="name"
-              onChange={handleChange}
-              value={inputs.name}
-              placeholder="Name"
-              margin="normal"
-            />
-          )}{" "}
+
           <TextField
-            name="email"
+            name="name"
             onChange={handleChange}
             value={inputs.email}
-            type={"email"}
-            placeholder="Email"
+            type={"text"}
+            placeholder="Email or Username"
             margin="normal"
           />
+
           <TextField
             name="password"
             onChange={handleChange}
@@ -92,19 +95,30 @@ const Login = () => {
             placeholder="Password"
             margin="normal"
           />
+
           <Button
             type="submit"
             variant="contained"
             sx={{ borderRadius: 3, marginTop: 3 }}
-            color="warning"
+            backgroundColor="#E035FC"
           >
             Submit
           </Button>
+
           <Button
-            onClick={() => setIsSignup(!isSignup)}
+            onClick={() => oauth()}
+            variant="contained"
+            sx={{ borderRadius: 3, marginTop: 3 }}
+            backgroundColor="#E035FC"
+          >
+            Login with Google
+          </Button>
+
+          <Button
+            onClick={() => naviagte('/register')}
             sx={{ borderRadius: 3, marginTop: 3 }}
           >
-            Change To {isSignup ? "Login" : "Signup"}
+            New user?
           </Button>
         </Box>
       </form>
@@ -112,4 +126,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login

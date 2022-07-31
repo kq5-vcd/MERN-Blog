@@ -5,24 +5,12 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../store";
 import { useNavigate } from "react-router-dom";
 
-function Register() {
-  const naviagte = useNavigate();
-  const dispath = useDispatch();
-  const [inputs, setInputs] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  const [isSignup, setIsSignup] = useState(false);
-  const handleChange = (e) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-  const sendRequest = async (type = "login") => {
+const sendRequest = async (inputs) => {
+  if (inputs.password !== inputs.confirm) {
+    alert("Passwords don't match");
+  } else {
     const res = await axios
-      .post(`http://localhost:5000/api/user/${type}`, {
+      .post(`http://localhost:2022/api/user/signup`, {
         name: inputs.name,
         email: inputs.email,
         password: inputs.password,
@@ -31,24 +19,52 @@ function Register() {
 
     const data = await res.data;
     console.log(data);
+
     return data;
+  }
+};
+
+const oauth = async () => {
+  const res = await axios
+    .get(`http://localhost:2022/api/oauth2/google`)
+    .catch((err) => console.log(err));
+
+  const data = await res.data;
+  console.log(data);
+
+  return data;
+}
+
+function Register() {
+  const naviagte = useNavigate();
+  const dispath = useDispatch();
+
+  const [inputs, setInputs] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirm: ""
+  });
+  
+  const handleChange = ({ target }) => {
+    setInputs((prevState) => ({
+      ...prevState,
+      [target.name]: target.value,
+    }));
+
+    console.log(inputs);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(inputs);
-    if (isSignup) {
-      sendRequest("signup")
-        .then((data) => localStorage.setItem("userId", data.user._id))
-        .then(() => dispath(authActions.login()))
-        .then(() => naviagte("/blogs"));
-    } else {
-      sendRequest()
-        .then((data) => localStorage.setItem("userId", data.user._id))
-        .then(() => dispath(authActions.login()))
-        .then(() => naviagte("/blogs"));
-    }
+    
+    sendRequest(inputs)
+      .then((data) => localStorage.setItem("userId", data.user._id))
+      .then(() => dispath(authActions.login()))
+      .then(() => naviagte("/blogs"));
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -63,19 +79,20 @@ function Register() {
           margin="auto"
           marginTop={5}
           borderRadius={5}
+          backgroundColor="#FFFEFC"
         >
           <Typography variant="h2" padding={3} textAlign="center">
-            {isSignup ? "Signup" : "Login"}
+            Register
           </Typography>
-          {isSignup && (
-            <TextField
-              name="name"
-              onChange={handleChange}
-              value={inputs.name}
-              placeholder="Name"
-              margin="normal"
-            />
-          )}{" "}
+
+          <TextField
+            name="name"
+            onChange={handleChange}
+            value={inputs.name}
+            placeholder="Name"
+            margin="normal"
+          />
+
           <TextField
             name="email"
             onChange={handleChange}
@@ -84,6 +101,7 @@ function Register() {
             placeholder="Email"
             margin="normal"
           />
+
           <TextField
             name="password"
             onChange={handleChange}
@@ -92,19 +110,39 @@ function Register() {
             placeholder="Password"
             margin="normal"
           />
+
+          <TextField
+            name="confirm"
+            onChange={handleChange}
+            value={inputs.password}
+            type={"password"}
+            placeholder="Confirm password"
+            margin="normal"
+          />
+
           <Button
             type="submit"
             variant="contained"
             sx={{ borderRadius: 3, marginTop: 3 }}
-            color="warning"
+            backgroundColor="#E035FC"
           >
             Submit
           </Button>
+
           <Button
-            onClick={() => setIsSignup(!isSignup)}
+            onClick={() => oauth()}
+            variant="contained"
+            sx={{ borderRadius: 3, marginTop: 3 }}
+            backgroundColor="#E035FC"
+          >
+            Login with Google
+          </Button>
+
+          <Button
+            onClick={() => naviagte('/login')}
             sx={{ borderRadius: 3, marginTop: 3 }}
           >
-            Change To {isSignup ? "Login" : "Signup"}
+            Already have an account?
           </Button>
         </Box>
       </form>
