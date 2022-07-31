@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { authActions } from "../store";
 import { useNavigate } from "react-router-dom";
+import GoogleIcon from '@mui/icons-material/Google';
 
 const sendRequest = async (inputs) => {
   const res = await axios
@@ -111,7 +112,8 @@ const Login = () => {
             sx={{ borderRadius: 3, marginTop: 3 }}
             backgroundColor="#E035FC"
           >
-            Login with Google
+            <GoogleIcon />   
+            <span style={{marginLeft: 10}}>Login with Google</span>
           </Button>
 
           <Button

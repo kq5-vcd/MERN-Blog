@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store";
 import { useStyles } from "./utils";
+
 const Header = () => {
   const classes = useStyles();
   const dispath = useDispatch();
@@ -12,10 +13,11 @@ const Header = () => {
   const [value, setValue] = useState();
   return (
     <AppBar
-      position="sticky"
       sx={{
         background:
           "radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(46,171,219,1) 30%, rgba(28,252,185,1) 64%)",
+        position: "fixed",
+        top: 0,
       }}
     >
       <Toolbar>

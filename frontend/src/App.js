@@ -29,7 +29,7 @@ function App() {
       <header>
         <Header />
       </header>
-      <main>
+      <main style={{marginTop: 100}}>
         <Routes>
           {!isLoggedIn ? (
             <>
