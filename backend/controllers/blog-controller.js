@@ -6,7 +6,7 @@ export const getAllBlogsAdmin = async (req,res,next) => {
     let blogs
 
     try {
-        blogs = await Blog.find()
+        blogs = await Blog.find().populate("user")
     } catch (error) {
         console.log(error);
     }
@@ -41,7 +41,7 @@ export const getAllBlogs = async (req,res,next) => {
                 {user: {$in: user.subscriptions}},
                 {user: user._id}
             ]
-        })
+        }).populate("user")
     } catch (error) {
         console.log(error);
     }
@@ -129,7 +129,7 @@ export const getById = async (req,res,next) => {
     let blog
 
     try {
-        blog = await Blog.findById(id)
+        blog = await Blog.findById(id).populate("user")
     } catch (error) {
         console.log(error);
     }

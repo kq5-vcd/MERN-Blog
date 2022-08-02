@@ -14,7 +14,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useStyles } from "./utils";
-const Blog = ({ title, description, imageURL, userName, isUser, id }) => {
+const Blog = ({ title, description, content, imageURL, premium, userName, isUser, id }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const handleEdit = () => {
@@ -22,7 +22,7 @@ const Blog = ({ title, description, imageURL, userName, isUser, id }) => {
   };
   const deleteRequest = async () => {
     const res = await axios
-      .delete(`http://localhost:5000/api/blog/${id}`)
+      .delete(`http://localhost:2022/api/blog/${id}`)
       .catch((err) => console.log(err));
     const data = await res.data;
     return data;
@@ -58,22 +58,13 @@ const Blog = ({ title, description, imageURL, userName, isUser, id }) => {
           </Box>
         )}
         <CardHeader
-          avatar={
-            <Avatar
-              className={classes.font}
-              sx={{ bgcolor: "red" }}
-              aria-label="recipe"
-            >
-              {userName ? userName.charAt(0) : ""}
-            </Avatar>
-          }
-          title={title}
+          title={title + " by " + userName}
         />
         <CardMedia
           component="img"
           height="194"
           image={imageURL}
-          alt="Paella dish"
+          alt="Some Image"
         />
 
         <CardContent>
@@ -84,7 +75,7 @@ const Blog = ({ title, description, imageURL, userName, isUser, id }) => {
             variant="body2"
             color="text.secondary"
           >
-            <b>{userName}</b> {": "} {description}
+           {description}
           </Typography>
         </CardContent>
       </Card>
