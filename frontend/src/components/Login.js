@@ -8,7 +8,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 
 const sendRequest = async (inputs) => {
   const res = await axios
-    .post(`http://localhost:2022/api/user/login`, {
+    .post(`${process.env.BACKEND_URL}/api/user/login`, {
       name: inputs.name,
       password: inputs.password,
     })
@@ -21,14 +21,10 @@ const sendRequest = async (inputs) => {
 };
 
 const oauth = async () => {
-  const res = await axios
-    .get(`http://localhost:2022/api/oauth2/google`)
-    .catch((err) => console.log(err));
-
-  const data = await res.data;
-  console.log(data);
-
-  return data;
+  window.open(
+    `http://localhost:2022/api/oauth2/google`,
+    "_self"
+  )
 }
 
 const Login = () => {
