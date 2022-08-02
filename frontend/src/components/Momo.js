@@ -1,4 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material'
+import { purple, red } from '@mui/material/colors';
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -16,24 +17,6 @@ function Momo() {
     <div style = {{
         alignItems: 'center'
     }}>
-        <Paper elevation ={10}
-            alignItems= "center"
-            sx={{
-                width: 1/4,
-                margin: "auto"
-            }}>
-            <Typography fontSize={30} 
-                sx={{ 
-                    mt: 2,
-                }}> 
-                Subscribe to 
-                <Link to="google.com">
-                    ming
-                </Link> 
-            </Typography>
-            <Typography fontSize={15}>
-                description description description description description description 
-            </Typography>
             <Button variant="contained" disableElevation onClick={handleClickOpen}> Subscribe </Button>
             <Dialog
                 open={open}
@@ -45,18 +28,15 @@ function Momo() {
                 {"Are you sure you want to Subscribe?"}
                 </DialogTitle>
                 <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    by Accepting our term's of service, you agree to pay 
-                    5$ to Subscribe to this person. You will be notified 
-                    for every content this person uploads.
+                <DialogContentText id="alert-dialog-description" fontSize={20}>
+                    5$ 
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleClose}> Disagree </Button>
-                <Button onClick={handleClose} autoFocus> Subscribe </Button>
+                <Button onClick={handleClose}> Cancle </Button>
+                <Button onClick={handleClose} autoFocus sx={{backgroundColor: purple.A400, color: red}}> Subscribe </Button>
                 </DialogActions>
             </Dialog>
-        </Paper>
     </div>
   )
 }
