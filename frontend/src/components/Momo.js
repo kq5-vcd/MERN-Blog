@@ -29,7 +29,14 @@ function Momo() {
                 </DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-description" fontSize={20}>
-                    5$ 
+                    Service: momo
+                    <br/>
+                    Recipient: userId
+                </DialogContentText>
+                <DialogContentText id="alert-dialog-description" fontSize={40}>
+                    <br/>
+                    <br/>
+                    Total: 5$ 
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
