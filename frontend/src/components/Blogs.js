@@ -6,7 +6,7 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState();
   const sendRequest = async () => {
     const res = await axios
-      .get("http://localhost:5000/api/blog")
+      .get("http://localhost:2022/api/blog")
       .catch((err) => console.log(err));
     const data = await res.data;
     return data;
@@ -21,10 +21,11 @@ const Blogs = () => {
         blogs.map((blog, index) => (
           <Blog
             id={blog._id}
-            isUser={localStorage.getItem("userId") === blog.user._id}
+            //isUser={localStorage.getItem("userId") === blog.user}
             title={blog.title}
+            content={blog.content}
             description={blog.description}
-            imageURL={blog.image}
+            imageURL={blog.img}
             userName={blog.user.name}
           />
         ))}
