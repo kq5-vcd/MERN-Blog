@@ -6,6 +6,7 @@ import AddBlog from "./components/AddBlog";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Momo from "./components/Momo"
 
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -48,6 +49,7 @@ function App() {
           )}
 
           <Route path="/" element={<Home />} />
+          <Route path="/momoTest" element={<Momo />} />
         </Routes>
       </main>
     </React.Fragment>
