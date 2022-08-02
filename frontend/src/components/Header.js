@@ -16,8 +16,7 @@ const Header = () => {
   return (
     <AppBar
       sx={{
-        background:
-          "radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(46,171,219,1) 30%, rgba(28,252,185,1) 64%)",
+        background: "black",
         position: "fixed",
         top: 0,
       }}
@@ -25,9 +24,12 @@ const Header = () => {
       <Toolbar>
         <Typography 
           className={classes.font} 
-          sx={{ color: "#B0840B", cursor: "pointer" }} 
+          sx={{ color: "white", cursor: "pointer", font: "Playfair Display" }} 
           variant="h4" 
-          onClick={() => navigate("/")}
+          onClick={() => {
+            setValue(null)
+            navigate("/")
+          }}
         >
           PremiumThoughts
         </Typography>
@@ -35,7 +37,7 @@ const Header = () => {
         {isLoggedIn && (
           <Box display="flex" marginLeft={"auto"} marginRight="auto">
             <Tabs
-              textColor="inherit"
+              textColor="black"
               value={value}
               onChange={(e, val) => setValue(val)}
             >
@@ -43,7 +45,7 @@ const Header = () => {
                 className={classes.font}
                 LinkComponent={Link}
                 to="/blogs"
-                label="All Blogs"
+                label="New Feeds"
               />
               <Tab
                 className={classes.font}
@@ -69,7 +71,7 @@ const Header = () => {
                 LinkComponent={Link}
                 to="/login"
                 variant="contained"
-                sx={{ margin: 1, borderRadius: 10, background: "#E035FC" }}
+                sx={{ margin: 1, borderRadius: 10, background: "#4D3636" }}
               >
                 Login
               </Button>
@@ -77,7 +79,7 @@ const Header = () => {
                 LinkComponent={Link}
                 to="/register"
                 variant="contained"
-                sx={{ margin: 1, borderRadius: 10, background: "#E035FC" }}
+                sx={{ margin: 1, borderRadius: 10, background: "#4D3636" }}
               >
                 Signup
               </Button>
@@ -90,7 +92,7 @@ const Header = () => {
               LinkComponent={Link}
               to="/"
               variant="contained"
-              sx={{ margin: 1, borderRadius: 10, background: "#E035FC" }}
+              sx={{ margin: 1, borderRadius: 10, background: "#1D4D42" }}
             >
               Logout
             </Button>
