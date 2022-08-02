@@ -32,7 +32,7 @@ function App() {
       <header>
         <Header />
       </header>
-      <main style={{marginTop: 100}}>
+      <main style={{marginTop: 65}}>
         <Routes>
           {!isLoggedIn ? (
             <>
@@ -48,7 +48,7 @@ function App() {
             </>
           )}
 
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home isLoggedIn={isLoggedIn}/>} />
           <Route path="/momoTest" element={<Momo />} />
         </Routes>
       </main>

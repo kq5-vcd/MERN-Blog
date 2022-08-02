@@ -1,25 +1,15 @@
 import React from 'react'
-import { Box, Typography } from "@mui/material"
+import HeroSection from './home/HeroSection';
+import Footer from './home/Footer';
 
-function Home() {
+function Home({isLoggedIn}) {
   return (
-    <Box
-          maxWidth={400}
-          display="flex"
-          flexDirection={"column"}
-          alignItems="center"
-          justifyContent={"center"}
-          boxShadow="10px 10px 20px #ccc"
-          padding={3}
-          margin="auto"
-          marginTop={5}
-          borderRadius={5}
-          backgroundColor="#FFFEFC"
-        >
-          <Typography variant="h2" padding={3} textAlign="center">
-            Home Page
-          </Typography>
-        </Box>
+    <>
+      <HeroSection
+        isLoggedIn = {isLoggedIn}
+      />
+      <Footer />
+    </>
   )
 }
 
