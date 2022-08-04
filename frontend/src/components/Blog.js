@@ -7,6 +7,7 @@ import {
   CardMedia,
   IconButton,
   Typography,
+  Dialog,
 } from "@mui/material";
 import React from "react";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
@@ -32,6 +33,16 @@ const Blog = ({ title, description, content, imageURL, premium, userName, isUser
       .then(() => navigate("/"))
       .then(() => navigate("/blogs"));
   };
+
+  const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
   return (
     <div>
       
@@ -62,20 +73,22 @@ const Blog = ({ title, description, content, imageURL, premium, userName, isUser
       <CardMedia
         component="img"
         sx={{
+          display: 'flex',
+          flex: 1,
           boxShadow: 9,
           borderRadius: 3,
           marginRight:5,
-          width: 250,
+          width: 1/2,
           height: 350
         }}
         image={imageURL}
         alt="Some Image"
       />
 
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', flex: 2}}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography gutterBottom component="div" variant="h5" fontSize={35}>
-            <a href="http://localhost:3000/blog/:id" >{title}</a>
+            <a href={`http://localhost:3000/blog/${id}`} >{title}</a>
           </Typography>
           <br/><br/>
           <Typography variant="body1" color="text.secondary" component="div">
@@ -90,6 +103,7 @@ const Blog = ({ title, description, content, imageURL, premium, userName, isUser
       
     </Paper>
   </div>
+  
   );
 };
 
