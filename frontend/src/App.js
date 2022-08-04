@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Momo from "./components/Momo"
 import OAuth from "./components/OAuth";
+import Author from "./components/Author";
 
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -16,6 +17,7 @@ import { authActions } from "./store";
 import axios from "axios";
 
 import "./App.css";
+import Author from "./components/Author";
 
 function App() {
   const dispath = useDispatch();
@@ -48,11 +50,12 @@ function App() {
               <Route path="/blogs/add" element={<AddBlog />} />
               <Route path="/myBlogs" element={<UserBlogs />} />
               <Route path="/blog/:id" element={<BlogDetail />} />
+              <Route path="/momoTest" element={<Momo />} />
+              <Route path="/:id/blogs" element={<Author />} />
             </>
           )}
 
           <Route path="/" element={<Home className="home" isLoggedIn={isLoggedIn}/>} />
-          <Route path="/momoTest" element={<Momo />} />
         </Routes>
       </main>
     </React.Fragment>

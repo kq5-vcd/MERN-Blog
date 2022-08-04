@@ -127,8 +127,8 @@ export const subscribe = async (req,res,next) => {
     } catch (error) {
         console.log(error);
     }
-    
-    return res.status(200).json({message: "Subscription successful."})
+
+    res.redirect(`http://localhost:3000/`)
 }
 
 export const cancelSubscribe = async (req,res,next) => {

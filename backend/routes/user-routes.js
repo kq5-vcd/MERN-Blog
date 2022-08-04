@@ -6,7 +6,7 @@ const userRouter = express.Router()
 userRouter.get("/", getAllUsers)
 userRouter.post("/signup", signup)
 userRouter.post("/login", login)
-userRouter.put("/:id/subscribe/:subId", subscribe)
+userRouter.get("/:id/subscribe/:subId", subscribe)
 userRouter.put("/:id/cancel/:subId", cancelSubscribe)
 
 export default userRouter
