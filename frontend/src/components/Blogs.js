@@ -4,17 +4,22 @@ import Blog from "./Blog";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState();
+  const userId = localStorage.getItem("userId")
+
   const sendRequest = async () => {
     const res = await axios
-      .get("http://localhost:2022/api/blog")
+      .get(`http://localhost:2022/api/blog/${userId}/all`)
       .catch((err) => console.log(err));
     const data = await res.data;
     return data;
   };
+
   useEffect(() => {
     sendRequest().then((data) => setBlogs(data.blogs));
   }, []);
+
   console.log(blogs);
+  
   return (
     <div>
       {blogs &&

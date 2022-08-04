@@ -4,7 +4,7 @@ import cookieSession from 'cookie-session';
 import userRouter from "./routes/user-routes"
 import blogRouter from "./routes/blog-routes"
 import oauthRouter from './routes/oauth-routes';
-import passport from './controllers/oath-controller'
+import passport from './controllers/oauth-controller'
 import { key } from './oauthKey';
 import cors from 'cors'
 

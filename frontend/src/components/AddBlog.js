@@ -13,19 +13,22 @@ const AddBlog = () => {
     description: "",
     imageURL: "",
   });
+  const id = localStorage.getItem("userId");
+
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
+
   const sendRequest = async () => {
     const res = await axios
-      .post("http://localhost:2022/api/blog/add", {
+      .post(`http://localhost:2022/api/blog/${id}`, {
         title: inputs.title,
         description: inputs.description,
         image: inputs.imageURL,
-        user: localStorage.getItem("userId"),
+        user: id,
       })
       .catch((err) => console.log(err));
     const data = await res.data;

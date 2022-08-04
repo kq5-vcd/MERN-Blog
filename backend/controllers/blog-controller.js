@@ -162,8 +162,8 @@ export const getByUserId = async (req,res,next) => {
     const authorId = req.params.id
     const userId = req.params.userId
 
-    let userBlogs
     let user
+    let author
     
     try {
         user = await User.findById(userId)
@@ -177,24 +177,20 @@ export const getByUserId = async (req,res,next) => {
 
     try {
         if(userId === authorId || user.subscriptions.includes(authorId)) {
-            const author = await User.findById(authorId).populate("blogs")
-            userBlogs = author.blogs
+            author = await User.findById(authorId).populate("blogs")
         } else {
-            userBlogs = await Blog.find({
-                user: authorId,
-                premium: false
-            })
+            author = await User.findById(authorId).populate({path: "blogs", match: {premium: false}})
         }
         
     } catch (error) {
         console.log(error);
     }
 
-    if(!userBlogs) {
-        return res.status(404).json({message: "No blog found."})
+    if(!author) {
+        return res.status(404).json({message: "No author found."})
     }
 
-    return res.status(200).json({blogs: userBlogs})
+    return res.status(200).json({user: author})
 }
 
 export const deleteById = async (req,res,next) => {

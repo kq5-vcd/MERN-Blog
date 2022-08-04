@@ -7,11 +7,13 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Momo from "./components/Momo"
+import OAuth from "./components/OAuth";
 
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "./store";
+import axios from "axios";
 
 import "./App.css";
 
@@ -32,12 +34,13 @@ function App() {
       <header>
         <Header />
       </header>
-      <main style={{marginTop: 65}}>
+      <main style={{marginTop: 55, paddingTop: 10}}>
         <Routes>
           {!isLoggedIn ? (
             <>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/login/:id" element={<OAuth />} />
             </>
           ) : (
             <>
@@ -48,7 +51,7 @@ function App() {
             </>
           )}
 
-          <Route path="/" element={<Home isLoggedIn={isLoggedIn}/>} />
+          <Route path="/" element={<Home className="home" isLoggedIn={isLoggedIn}/>} />
           <Route path="/momoTest" element={<Momo />} />
         </Routes>
       </main>

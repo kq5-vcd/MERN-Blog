@@ -6,35 +6,38 @@ import { authActions } from "../store";
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from '@mui/icons-material/Google';
 
-const sendRequest = async (inputs) => {
-  const res = await axios
-    .post(`${process.env.BACKEND_URL}/api/user/login`, {
-      name: inputs.name,
-      password: inputs.password,
-    })
-    .catch((err) => console.log(err));
-
-  const data = await res.data;
-  console.log(data);
-
-  return data;
-};
-
-const oauth = async () => {
-  window.open(
-    `http://localhost:2022/api/oauth2/google`,
-    "_self"
-  )
-}
-
 const Login = () => {
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
   const dispath = useDispatch();
   
   const [inputs, setInputs] = useState({
     name: "",
     password: "",
   });
+
+  const sendRequest = async (inputs) => {
+    const res = await axios
+      .post(`http://localhost:2022/api/user/login`, {
+        name: inputs.name,
+        password: inputs.password,
+      })
+      .catch((err) => {
+        console.log(err)
+        alert(err.response.data.message)
+      });
+  
+    const data = await res.data;
+    console.log(data);
+  
+    return data;
+  };
+  
+  const oauth = async () => {
+    window.open(
+      `http://localhost:2022/api/oauth2/google`,
+      "_self"
+    )
+  }
   
   const handleChange = ({ target }) => {
     setInputs((prevState) => ({
@@ -45,14 +48,20 @@ const Login = () => {
     console.log(inputs);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async(e) => {
+    e.preventDefault()
     console.log(inputs);
     
-    sendRequest(inputs)
-      .then((data) => localStorage.setItem("userId", data.user._id))
-      .then(() => dispath(authActions.login()))
-      .then(() => naviagte("/blogs"));
+    const data = await sendRequest(inputs)
+
+    if(!data.user) {
+      alert(data.message)
+    } else {
+      localStorage.setItem("userId", data.user._id)
+
+      dispath(authActions.login())
+      navigate("/blogs")
+    }
   }
     
   return (
@@ -113,7 +122,7 @@ const Login = () => {
           </Button>
 
           <Button
-            onClick={() => naviagte('/register')}
+            onClick={() => navigate('/register')}
             sx={{ borderRadius: 3, marginTop: 3 }}
           >
             New user?

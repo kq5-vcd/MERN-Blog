@@ -1,20 +1,13 @@
-import passport from "../controllers/oath-controller"
+import passport, { logOut, failure, success } from "../controllers/oauth-controller"
 import express from "express"; 
 
 const oauthRouter = express.Router()
 
-oauthRouter.get('/failure', (req,res,next) => {
-    return res.status(401).json({message: "Fail to access Google"})
-});
+oauthRouter.get('/failure', failure);
 
-oauthRouter.get('/success', (req,res,next) => {
-    if (req.user) {
-        res.status(200).json({message: "Successful authorization"})
-    } else {
-        res.status(403).json({message: "Unsuccessful authorization"})
-    }
-});
+oauthRouter.get('/success', success);
 
+oauthRouter.get('/logout', logOut)
 
 oauthRouter.get('/google',
     passport.authenticate('google', {
@@ -23,7 +16,7 @@ oauthRouter.get('/google',
 );
 
 oauthRouter.get('/redirect/google', passport.authenticate('google', {
-    successRedirect: 'http://localhost:3000/',
+    successRedirect: '/api/oauth2/success',
     failureRedirect: '/api/oauth2/failure'
 }));
 

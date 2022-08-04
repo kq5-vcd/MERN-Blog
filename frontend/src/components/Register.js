@@ -6,34 +6,8 @@ import { authActions } from "../store";
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from '@mui/icons-material/Google';
 
-const sendRequest = async (inputs) => {
-  const res = await axios
-    .post(`http://localhost:2022/api/user/signup`, {
-      name: inputs.name,
-      email: inputs.email,
-      password: inputs.password,
-    })
-    .catch((err) => console.log(err));
-
-  const data = await res.data;
-  console.log(data);
-
-  return data;
-};
-
-const oauth = async () => {
-  const res = await axios
-    .get(`http://localhost:2022/api/oauth2/google`)
-    .catch((err) => console.log(err));
-
-  const data = await res.data;
-  console.log(data);
-
-  return data;
-}
-
 function Register() {
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
   const dispath = useDispatch();
 
   const [name, setName] = useState("")
@@ -76,6 +50,31 @@ function Register() {
     }
   }, [confirm])
 
+  const sendRequest = async (inputs) => {
+    const res = await axios
+      .post(`http://localhost:2022/api/user/signup`, {
+        name: inputs.name,
+        email: inputs.email,
+        password: inputs.password,
+      })
+      .catch((err) => {
+        console.log(err)
+        alert(err.response.data.message)
+      });
+  
+    const data = await res.data;
+    console.log(data);
+  
+    return data;
+  };
+  
+  const oauth = async () => {
+    window.open(
+      `http://localhost:2022/api/oauth2/google`,
+      "_self"
+    )
+  }
+
   const handleName = ({ target }) => {
     setName(target.value)
     console.log(name);
@@ -109,8 +108,9 @@ function Register() {
     if(nameCheck && passCheck && confirmCheck) {
       sendRequest(inputs)
         .then((data) => localStorage.setItem("userId", data.user._id))
+        
         .then(() => dispath(authActions.login()))
-        .then(() => naviagte("/blogs"));
+        .then(() => navigate("/blogs"));
     }
   };
 
@@ -199,7 +199,7 @@ function Register() {
           </Button>
 
           <Button
-            onClick={() => naviagte('/login')}
+            onClick={() => navigate('/login')}
             sx={{ borderRadius: 3, marginTop: 3 }}
           >
             Already have an account?

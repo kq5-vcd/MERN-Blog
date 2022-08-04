@@ -4,6 +4,25 @@ import { key } from '../oauthKey';
 import User from "../models/User"
 import bcrypt from "bcryptjs"
 
+const CLIENT_URL = 'http://localhost:3000'
+
+export const logOut = async (req,res,next) => {
+    req.logOut()
+    res.redirect(CLIENT_URL)
+}
+
+export const failure = async (req,res,next) => {
+    return res.status(401).json({message: "Fail to access Google"})
+}
+
+export const success = async (req,res,next) => {
+    if (req.user) {
+        res.redirect(`${CLIENT_URL}/login/${req.user._id}`)
+    } else {
+        return res.status(403).json({message: "Unsuccessful authorization"})
+    }
+}
+
 const handleProfile = async(profile, cb) => {
     // Check if google profile exist.
     if (profile.id) {
