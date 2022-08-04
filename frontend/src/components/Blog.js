@@ -75,7 +75,7 @@ const Blog = ({ title, description, content, imageURL, premium, userName, isUser
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography gutterBottom component="div" variant="h5" fontSize={35}>
-            <a href="http://localhost:3000/myBlogs/:id" >{title}</a>
+            <a href="http://localhost:3000/blog/:id" >{title}</a>
           </Typography>
           <br/><br/>
           <Typography variant="body1" color="text.secondary" component="div">
