@@ -89,6 +89,17 @@ const AddBlog = () => {
             variant="outlined"
           />
           <InputLabel className={classes.font} sx={labelStyles}>
+            Content
+          </InputLabel>
+          <TextField
+            className={classes.font}
+            name="content"
+            onChange={handleChange}
+            value={inputs.description}
+            margin="auto"
+            variant="outlined"
+          />
+          <InputLabel className={classes.font} sx={labelStyles}>
             ImageURL
           </InputLabel>
           <TextField

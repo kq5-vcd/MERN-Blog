@@ -34,19 +34,19 @@ const Blog = ({ title, description, content, imageURL, premium, userName, isUser
   };
   return (
     <div>
-      {" "}
-      <Card
-        sx={{
-          width: "40%",
-          margin: "auto",
-          mt: 2,
-          padding: 2,
-          boxShadow: "5px 5px 10px #ccc",
-          ":hover": {
-            boxShadow: "10px 10px 20px #ccc",
-          },
-        }}
-      >
+      
+      <Card sx={{ 
+        display: 'flex',
+        width: "50%",
+        margin: "auto",
+        mt: 2,
+        padding: 2,
+        boxShadow: "5px 5px 10px #ccc",
+        ":hover": {
+          boxShadow: "10px 10px 20px #ccc",
+        }
+      }}>
+
         {isUser && (
           <Box display="flex">
             <IconButton onClick={handleEdit} sx={{ marginLeft: "auto" }}>
@@ -57,29 +57,34 @@ const Blog = ({ title, description, content, imageURL, premium, userName, isUser
             </IconButton>
           </Box>
         )}
-        <CardHeader
-          title={title + " by " + userName}
-        />
-        <CardMedia
-          component="img"
-          height="194"
-          image={imageURL}
-          alt="Some Image"
-        />
 
-        <CardContent>
-          <hr />
-          <br />
-          <Typography
-            className={classes.font}
-            variant="body2"
-            color="text.secondary"
-          >
-           {description}
+      <CardMedia
+        component="img"
+        sx={{ 
+          width: 350,
+          height: 350
+        }}
+        image={imageURL}
+        alt="Some Image"
+      />
+
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <CardContent sx={{ flex: '1 0 auto' }}>
+          <Typography gutterBottom component="div" variant="h5" >
+            <a href="http://localhost:3000/myBlogs/:id" >{title}</a>
+          </Typography>
+          <Typography variant="body1" color="text.secondary" component="div">
+            {description}
           </Typography>
         </CardContent>
-      </Card>
-    </div>
+        <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1, fontWeight : "Bold", fontSize : 25}}>
+          {"by " + userName}
+        </Box>
+      </Box>
+      
+      
+    </Card>
+  </div>
   );
 };
 
