@@ -27,6 +27,7 @@ const AddBlog = () => {
       .post(`http://localhost:2022/api/blog/${id}`, {
         title: inputs.title,
         description: inputs.description,
+        content: inputs.content,
         image: inputs.imageURL,
         user: id,
       })
@@ -95,7 +96,7 @@ const AddBlog = () => {
             className={classes.font}
             name="content"
             onChange={handleChange}
-            value={inputs.description}
+            value={inputs.content}
             margin="auto"
             variant="outlined"
           />

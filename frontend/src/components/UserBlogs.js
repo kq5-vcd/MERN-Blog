@@ -32,7 +32,7 @@ const UserBlogs = () => {
             isUser={true}
             title={blog.title}
             description={blog.description}
-            imageURL={blog.image}
+            imageURL={blog.img}
             userName={user.name}
           />
         ))}
