@@ -1,7 +1,7 @@
 import {
   Avatar,
   Box,
-  Card,
+  Paper,
   CardContent,
   CardHeader,
   CardMedia,
@@ -35,10 +35,11 @@ const Blog = ({ title, description, content, imageURL, premium, userName, isUser
   return (
     <div>
       
-      <Card sx={{ 
+      <Paper sx={{ 
         display: 'flex',
         width: "50%",
         margin: "auto",
+        borderRadius: 6,
         mt: 2,
         padding: 2,
         boxShadow: "5px 5px 10px #ccc",
@@ -60,8 +61,11 @@ const Blog = ({ title, description, content, imageURL, premium, userName, isUser
 
       <CardMedia
         component="img"
-        sx={{ 
-          width: 350,
+        sx={{
+          boxShadow: 9,
+          borderRadius: 3,
+          marginRight:5,
+          width: 250,
           height: 350
         }}
         image={imageURL}
@@ -84,7 +88,7 @@ const Blog = ({ title, description, content, imageURL, premium, userName, isUser
       </Box>
       
       
-    </Card>
+    </Paper>
   </div>
   );
 };
