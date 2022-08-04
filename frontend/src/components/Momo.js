@@ -1,7 +1,8 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material'
+import { Button, Box, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material'
 import { purple, red } from '@mui/material/colors';
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Blog from "./Blog";
 
 function Momo() {
     const [open, setOpen] = React.useState(false);
@@ -14,37 +15,34 @@ function Momo() {
         setOpen(false);
     };
   return (
-    <div style = {{
-        alignItems: 'center'
-    }}>
-            <Button variant="contained" disableElevation onClick={handleClickOpen}> Subscribe </Button>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                {"Are you sure you want to Subscribe?"}
-                </DialogTitle>
-                <DialogContent>
-                <DialogContentText id="alert-dialog-description" fontSize={20}>
-                    Service: momo
-                    <br/>
-                    Recipient: userId
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-description" fontSize={40}>
-                    <br/>
-                    <br/>
-                    Total: 5$ 
-                </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                <Button onClick={handleClose}> Cancle </Button>
-                <Button onClick={handleClose} autoFocus sx={{backgroundColor: purple.A400, color: red}}> Subscribe </Button>
-                </DialogActions>
-            </Dialog>
-    </div>
+    <Box sx={{  display: 'flex', 
+                flexDirection: 'column',
+                boxShadow: 10,
+                width:1/4,
+                height:450,
+                margin: 'auto',
+                marginTop: 10,
+                backgroundColor: 'White',
+            }}>
+            <DialogTitle id="alert-dialog-title">
+            {"Are you sure you want to Subscribe?"}
+            </DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-description" fontSize={20}>
+                Service: momo
+                <br/>
+                Recipient: userId
+            </DialogContentText>
+            <DialogContentText id="alert-dialog-description" fontSize={40}>
+                <br/> <br/> <br/>
+                Total: 50000 VND
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleClose}> Cancel </Button>
+            <Button onClick={handleClose} autoFocus sx={{backgroundColor: "red", color: "white", font:'bold'}}> Subscribe </Button>
+            </DialogActions>
+    </Box>
   )
 }
 
