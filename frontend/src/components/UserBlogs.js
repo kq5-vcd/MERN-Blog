@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Blog from "./Blog";
 import { useParams } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 
 const UserBlogs = ({self}) => {
   const [user, setUser] = useState();
@@ -34,8 +34,49 @@ const UserBlogs = ({self}) => {
   
   return (
     <div>
-      {user ? "" : <Typography>This user doesn't exist</Typography>}
-      {user && (user.blogs.length == 0) && <Typography>This user has no post.</Typography>}
+      {user ? "" : 
+      <Paper sx={{
+        backgroundColor: "white",
+        display: 'flex',
+        width: "50%",
+        margin: "auto",
+        borderRadius: 6,
+        mt: 2,
+        padding: 2,
+        boxShadow: 9,
+        alignContent: "center"
+        
+      }}>
+        <Typography fontSize= {30}
+          sx={{
+            width: 1/2,
+            margin: "auto"
+        }}>
+          This user doesn't exist
+        </Typography>
+      </Paper>}
+      {user && (user.blogs.length == 0) && 
+        <Paper sx={{
+          backgroundColor: "white",
+          display: 'flex',
+          width: "50%",
+          margin: "auto",
+          borderRadius: 6,
+          mt: 2,
+          padding: 2,
+          boxShadow: 9,
+          alignContent: "center"
+          
+        }}>
+          <Typography fontSize= {30}
+            sx={{
+              width: 1/2,
+              margin: "auto"
+          }}>
+            This user has no post.
+          </Typography>
+        </Paper>
+      }
       
       {user &&
         user.blogs.map((blog, index) => (
