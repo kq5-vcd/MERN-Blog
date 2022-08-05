@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Blog from "./Blog";
 import { useParams } from "react-router-dom";
+import { Typography } from "@mui/material";
 
 const UserBlogs = ({self}) => {
   const [user, setUser] = useState();
@@ -33,8 +34,8 @@ const UserBlogs = ({self}) => {
   
   return (
     <div>
-      {user ? "" : "This user doesn't exist"}
-      {user && (user.blogs.length == 0) && "This user has no post."}
+      {user ? "" : <Typography>This user doesn't exist</Typography>}
+      {user && (user.blogs.length == 0) && <Typography>This user has no post.</Typography>}
       
       {user &&
         user.blogs.map((blog, index) => (
