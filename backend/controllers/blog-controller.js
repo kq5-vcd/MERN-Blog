@@ -101,14 +101,15 @@ export const addBlog = async (req,res,next) => {
 
 export const updateBlog = async (req,res,next) => {
     const id = req.params.id
-    const { title, description, content, img } = req.body
+    const { title, description, content, img, premium } = req.body
     let blog
 
     try {
         blog = await Blog.findByIdAndUpdate(id, {
             title, 
             description, 
-            content, 
+            content,
+            premium, 
             img
         })
 

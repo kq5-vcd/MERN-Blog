@@ -1,17 +1,17 @@
 import { Box, Button, InputLabel, TextField, Typography, Checkbox, FormControlLabel } from "@mui/material";
-import { grey } from "@mui/material/colors";
-import { fontWeight } from "@mui/system";
 import axios from "axios";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useStyles } from "./utils";
 
 const labelStyles = { mb: 1, mt: 1, fontSize: "24px", fontWeight: "bold", color: '#79827b' };
 
-const AddBlog = () => {
+const InputBlog = ({add}) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
+  const {id} = useParams()
+  const [blog, setBlog] = useState({})
 
   const [inputs, setInputs] = useState({
     title: "",
@@ -21,6 +21,7 @@ const AddBlog = () => {
   });
 
   const [premium, setPremium] = useState(false)
+  
 
   const handleChange = ({target}) => {
     setInputs((prevState) => ({
@@ -33,8 +34,22 @@ const AddBlog = () => {
     setPremium(!premium)
   };
 
-  const sendRequest = async () => {
+  const getBlog = async () => {
     const res = await axios
+      .get(`http://localhost:2022/api/blog/${id}`)
+      .catch((err) => console.log(err));
+
+    const data = await res.data;
+    console.log(data);
+
+    return data;
+  };
+
+  const sendRequest = async () => {
+    let res
+
+    if(add) {
+      res = await axios
       .post(`http://localhost:2022/api/blog/${userId}`, {
         title: inputs.title,
         description: inputs.description,
@@ -43,6 +58,18 @@ const AddBlog = () => {
         img: inputs.imageURL,
       })
       .catch((err) => console.log(err));
+    } else {
+      res = await axios
+      .put(`http://localhost:2022/api/blog/${blog._id}`, {
+        title: inputs.title,
+        description: inputs.description,
+        content: inputs.content,
+        premium,
+        img: inputs.imageURL,
+      })
+      .catch((err) => console.log(err));
+    }
+    
 
     const data = await res.data;
     console.log(data);
@@ -59,6 +86,30 @@ const AddBlog = () => {
       .then((data) => console.log(data))
       .then(() => navigate("/myBlogs"));
   };
+
+  useEffect(() => {
+    if(!add) {
+      getBlog()
+      .then((data) => {
+        console.log(data);
+        setBlog(data.blog)
+        console.log(blog);
+      });
+    }
+  }, [])
+
+  useEffect(() => {
+    setInputs({
+      title: blog.title,
+      description: blog.description,
+      content: blog.content,
+      imageURL: blog.img,
+    })
+    setPremium(blog.premium)
+
+    console.log(inputs)
+  }, [blog])
+  
 
   return (
     <div>
@@ -84,7 +135,7 @@ const AddBlog = () => {
             variant="h2"
             textAlign={"center"}
           >
-            Post Your Blog
+            {add ? "Post Your Blog" : "Edit Post"}
           </Typography>
 
           <InputLabel className={classes.font} sx={labelStyles}>
@@ -160,4 +211,4 @@ const AddBlog = () => {
   );
 };
 
-export default AddBlog;
+export default InputBlog;

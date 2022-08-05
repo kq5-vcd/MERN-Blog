@@ -2,7 +2,7 @@ import Header from "./components/Header";
 import Blogs from "./components/Blogs";
 import UserBlogs from "./components/UserBlogs";
 import BlogDetail from "./components/BlogDetail";
-import AddBlog from "./components/AddBlog";
+import InputBlog from "./components/InputBlog";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -44,10 +44,11 @@ function App() {
           ) : (
             <>
               <Route path="/blogs" element={<Blogs />} />
-              <Route path="/blogs/add" element={<AddBlog />} />
+              <Route path="/blogs/add" element={<InputBlog add={true}/>} />
               <Route path="/myBlogs" element={<UserBlogs self={true}/>} />
               <Route path="/user/:id" element={<UserBlogs self={false}/>} />
               <Route path="/blog/:id" element={<BlogDetail />} />
+              <Route path="/blog/edit/:id" element={<InputBlog add={false}/>} />
               <Route path="/momoTest" element={<Momo />} />
             </>
           )}
