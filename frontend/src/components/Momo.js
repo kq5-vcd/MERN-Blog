@@ -1,11 +1,10 @@
 import { Button, Box, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material'
-import { purple, red } from '@mui/material/colors';
 import React from 'react'
-import { Link } from 'react-router-dom'
-import Blog from "./Blog";
+import axios from 'axios';
 
-function Momo({userName}) {
+function Momo({authorId, authorName, amount}) {
     const [open, setOpen] = React.useState(false);
+    const userId = localStorage.getItem("userId")
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -14,6 +13,30 @@ function Momo({userName}) {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const sendRequest = async (inputs) => {
+        const res = await axios
+          .post(`http://localhost:2022/api/momo`, {
+            userId,
+            authorId,
+            authorName,
+            amount
+          })
+          .catch((err) => {
+            console.log(err)
+            alert(err.response.data.message)
+          });
+      
+        const data = await res.data;
+        console.log(data);
+      
+        return data;
+      };
+
+    const handleSubscribe = () => {
+        sendRequest().then(() => alert("You can close this window after payment."))
+    }
+
   return (
     <Box sx={{  display: 'flex', 
                 flexDirection: 'column',
@@ -25,22 +48,17 @@ function Momo({userName}) {
                 backgroundColor: 'White',
             }}>
             <DialogTitle id="alert-dialog-title">
-            {"Are you sure you want to Subscribe?"}
+            {`Are you sure you want to subscribe to ${authorName}?`}
             </DialogTitle>
             <DialogContent>
-            <DialogContentText id="alert-dialog-description" fontSize={20}>
-                Service: momo
-                <br/>
-                Recipient: userId
-            </DialogContentText>
             <DialogContentText id="alert-dialog-description" fontSize={40}>
-                <br/> <br/> <br/>
-                Total: 50000 VND
+                <br/>
+                Total: {amount} VND
             </DialogContentText>
             </DialogContent>
             <DialogActions>
             <Button onClick={handleClose}> Cancel </Button>
-            <Button onClick={handleClose} autoFocus sx={{backgroundColor: "red", color: "white", font:'bold'}}> Subscribe </Button>
+            <Button onClick={handleSubscribe} autoFocus sx={{backgroundColor: "red", color: "white", font:'bold'}}> Subscribe </Button>
             </DialogActions>
     </Box>
   )
