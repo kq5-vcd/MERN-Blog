@@ -4,7 +4,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Blog from "./Blog";
 
-function Momo() {
+function Momo({userName}) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
