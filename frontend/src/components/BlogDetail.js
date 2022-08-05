@@ -8,7 +8,9 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useStyles } from "./utils";
 
 const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
+
 const BlogDetail = () => {
+  const classes = useStyles();
   const {id} = useParams()
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate()
@@ -70,21 +72,20 @@ const BlogDetail = () => {
 
   return (
     <div>
-      
-      <Paper sx={{ 
-        display: 'flex',
-        width: "50%",
-        margin: "auto",
-        borderRadius: 6,
-        mt: 2,
-        padding: 2,
-        boxShadow: "5px 5px 10px #ccc",
-        ":hover": {
-          boxShadow: "10px 10px 20px #ccc",
-        }
-      }}>
-
-      {self && (
+      <Box
+          border={3}
+          borderColor="linear-gradient(90deg, rgba(58,75,180,1) 2%, rgba(116,49,110,1) 36%, rgba(2,0,161,1) 73%, rgba(69,92,252,1) 100%)"
+          borderRadius={10}
+          boxShadow="10px 10px 20px #ccc"
+          bgcolor={"white"}
+          padding={3}
+          margin={"auto"}
+          marginTop={3}
+          display="flex"
+          flexDirection={"column"}
+          width={"60%"}
+        >
+          {self && (
           <Box display="flex"
           sx={{
             mr:2,
@@ -99,48 +100,71 @@ const BlogDetail = () => {
             </IconButton>
             <IconButton onClick={handleDelete}
             sx={{
-              flex: 1
+              flex: 1,
+              marginLeft: "auto"
             }}>
               <DeleteForeverIcon color="error" />
             </IconButton>
           </Box>
         )}
-
-      <CardMedia
-        component="img"
-        sx={{
-          display: 'flex',
-          flex: 1,
-          boxShadow: 9,
-          borderRadius: 3,
-          marginRight:5,
-          width: 1/2,
-          height: 350
-        }}
-        image={blog.img}
-        alt="Some Image"
-      />
-
-      <Box sx={{ display: 'flex', flexDirection: 'column', flex: 2}}>
-        <CardContent sx={{ flex: '1 0 auto' }}>
-          <Typography gutterBottom component="div" variant="h5" fontSize={35}>
+        
+          
+          <Typography
+            className={classes.font}
+            padding={3}
+            variant="h2"
+            textAlign={"left"}
+            paddingLeft={15}
+          >
             {blog.title}
           </Typography>
-          <br/><br/>
-          <Typography variant="body1" color="text.secondary" component="div">
+
+          <Typography
+            className={classes.font}
+            padding={3}
+            variant="body1" 
+            color="text.secondary"
+            textAlign={"left"}
+            paddingLeft={15}
+            fontSize={20}
+          >
             {blog.description}
           </Typography>
-          <Typography variant="body1" color="text.secondary" component="div">
+
+          
+
+          <Typography
+            className={classes.font}
+            padding={3}
+            variant="body1" 
+            textAlign={"left"}
+            paddingLeft={15}
+            fontSize={24}
+            sx={{
+              cursor: "pointer"
+            }}
+            onClick={() => {
+              navigate(`/user/${blog.user._id}`)
+            }}
+          >
+            {'by ' + blog.user.name}
+          </Typography>
+
+          <img src={blog.img}  style={{ maxWidth: '40%', width: '1/2', margin: 'auto', boxShadow: '6px 9px 15px', paddingBottom: '20'}}/>
+
+          <Typography
+            className={classes.font}
+            padding={3}
+            variant="body1" 
+            textAlign={"justify"}
+            paddingTop={10}
+            paddingLeft={10}
+            paddingRight={10}
+            fontSize={22}
+          >
             {blog.content}
           </Typography>
-        </CardContent>
-        <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1, fontWeight : "Bold", fontSize : 20}}>
-          {"by " + blog.user.name}
         </Box>
-      </Box>
-      
-      
-    </Paper>
   </div>
   );
 };
