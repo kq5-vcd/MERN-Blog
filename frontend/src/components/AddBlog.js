@@ -1,10 +1,12 @@
 import { Box, Button, InputLabel, TextField, Typography, Checkbox, FormControlLabel } from "@mui/material";
+import { grey } from "@mui/material/colors";
+import { fontWeight } from "@mui/system";
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStyles } from "./utils";
 
-const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
+const labelStyles = { mb: 1, mt: 1, fontSize: "24px", fontWeight: "bold", color: '#79827b' };
 
 const AddBlog = () => {
   const classes = useStyles();
@@ -66,6 +68,7 @@ const AddBlog = () => {
           borderColor="linear-gradient(90deg, rgba(58,75,180,1) 2%, rgba(116,49,110,1) 36%, rgba(2,0,161,1) 73%, rgba(69,92,252,1) 100%)"
           borderRadius={10}
           boxShadow="10px 10px 20px #ccc"
+          bgcolor={"white"}
           padding={3}
           margin={"auto"}
           marginTop={3}
@@ -112,16 +115,17 @@ const AddBlog = () => {
             Content
           </InputLabel>
           <TextField
-            className={classes.font}
-            name="content"
-            onChange={handleChange}
-            value={inputs.content}
-            margin="auto"
-            variant="outlined"
-          />
-
+          className={classes.font}
+          name="content"
+          multiline
+          rows={7}
+          onChange={handleChange}
+          value={inputs.content}
+          margin="auto"
+          variant="outlined"
+        />
           <InputLabel className={classes.font} sx={labelStyles}>
-            ImageURL
+            Image URL
           </InputLabel>
           <TextField
             className={classes.font}
@@ -133,12 +137,13 @@ const AddBlog = () => {
           />
 
           <FormControlLabel
-            label="Premium"
-            className={classes.font} 
-            sx={labelStyles}
             control={
               <Checkbox onClick={handleCheck} checked={premium} />
             }
+            
+            label={<Typography 
+              sx={labelStyles}>Premium</Typography>}
+            
           />
 
           <Button
