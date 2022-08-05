@@ -130,7 +130,7 @@ export const getById = async (req,res,next) => {
     let blog
 
     try {
-        blog = await Blog.findById(id).populate("user")
+        blog = await Blog.findById(id).populate({ path: 'user', select: 'name' })
     } catch (error) {
         console.log(error);
     }

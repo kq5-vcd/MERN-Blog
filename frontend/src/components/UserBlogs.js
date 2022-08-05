@@ -3,6 +3,7 @@ import axios from "axios";
 import Blog from "./Blog";
 import { useParams } from "react-router-dom";
 import { Paper, Typography } from "@mui/material";
+import Momo from "./Momo";
 
 const UserBlogs = ({self}) => {
   const [user, setUser] = useState();
@@ -89,7 +90,10 @@ const UserBlogs = ({self}) => {
             imageURL={blog.img}
             user={user}
           />
-        ))}
+        ))
+      }
+
+      {!self &&  <Momo />}
     </div>
   );
 };
