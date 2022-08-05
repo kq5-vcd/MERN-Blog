@@ -64,11 +64,22 @@ const Blog = ({ title, description, imageURL, user, isUser, id }) => {
       }}>
 
         {isUser && (
-          <Box display="flex">
-            <IconButton onClick={handleEdit} sx={{ marginLeft: "auto" }}>
+          <Box display="flex"
+          sx={{
+            mr:2,
+            flexDirection: "column",
+          }}>
+            <IconButton onClick={handleEdit} 
+            sx={{ 
+              marginLeft: "auto" ,
+              flex: 1
+            }}>
               <ModeEditOutlineIcon color="warning" />
             </IconButton>
-            <IconButton onClick={handleDelete}>
+            <IconButton onClick={handleDelete}
+            sx={{
+              flex: 1
+            }}>
               <DeleteForeverIcon color="error" />
             </IconButton>
           </Box>
