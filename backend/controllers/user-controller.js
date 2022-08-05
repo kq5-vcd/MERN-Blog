@@ -128,7 +128,7 @@ export const subscribe = async (req,res,next) => {
         console.log(error);
     }
 
-    res.redirect(`http://localhost:3000/`)
+    res.redirect(`http://localhost:3000/user/${subId}`)
 }
 
 export const cancelSubscribe = async (req,res,next) => {
@@ -161,4 +161,23 @@ export const cancelSubscribe = async (req,res,next) => {
     }
     
     return res.status(200).json({message: "Subscription successful."})
+}
+
+export const getSubscriptions = async (req,res,next) => {
+    const userId = req.params.id
+
+    let user
+
+    try {
+        user = await User.findById(userId)
+    } catch (error) {
+        console.log(error);
+    }
+
+    if(!user) {
+        return res.status(404).json({message: "No user found."})
+    }  
+
+    const sub = user.subscriptions
+    return res.status(200).json({sub})
 }

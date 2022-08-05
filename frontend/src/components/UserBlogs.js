@@ -2,22 +2,31 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Blog from "./Blog";
 import { useParams } from "react-router-dom";
-import { Paper, Typography } from "@mui/material";
+import { Paper, Typography, useIsFocusVisible } from "@mui/material";
 import Momo from "./Momo";
 
 const UserBlogs = ({self}) => {
   const [user, setUser] = useState();
   const params = useParams()
   const userId = localStorage.getItem("userId");
+  const [subscribed, setSubscribed] = useState(false)
+  let id
 
   let url 
   if(self) {
     url = `http://localhost:2022/api/blog/${userId}/user/${userId}`
   } else {
-    const id = params.id
-
+    id = params.id
     url = `http://localhost:2022/api/blog/${userId}/user/${id}`
   }
+
+  const getSubscription = async () => {
+    const res = await axios
+      .get(`http://localhost:2022/api/user/${userId}/subscriptions`)
+      .catch((err) => console.log(err));
+    const data = await res.data;
+    return data;
+  };
 
   const sendRequest = async () => {
     const res = await axios
@@ -30,6 +39,20 @@ const UserBlogs = ({self}) => {
   useEffect(() => {
     sendRequest().then((data) => setUser(data.user));
   }, []);
+
+  useEffect(() => {
+    if(!self) {
+      getSubscription()
+      .then((data) => data.sub)
+      .then((sub) => {
+        if(sub.includes(id) || id === userId) {
+          setSubscribed(true)
+        }
+
+        console.log(subscribed);
+      }) 
+    }
+  }, [user]);
 
   console.log(user);
   
@@ -93,7 +116,7 @@ const UserBlogs = ({self}) => {
         ))
       }
 
-      {!self &&  <Momo />}
+      {!self && !subscribed && user &&  <Momo authorId={params.id} authorName={user.name} amount={20000}/>}
     </div>
   );
 };

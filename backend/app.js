@@ -5,6 +5,7 @@ import userRouter from "./routes/user-routes"
 import blogRouter from "./routes/blog-routes"
 import oauthRouter from './routes/oauth-routes';
 import passport from './controllers/oauth-controller'
+import momoRouter from './routes/momo-routes';
 import { key } from './oauthKey';
 import cors from 'cors'
 
@@ -30,6 +31,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter)
 app.use('/api/blog', blogRouter)
 app.use('/api/oauth2', oauthRouter)
+app.use('/api/momo', momoRouter)
 
 mongoose.connect("mongodb+srv://admin:BnyKiYC8DHo38y7E@cluster0.uz16h.mongodb.net/blog?retryWrites=true&w=majority")
 .then(() => console.log("Connected To Database"))
