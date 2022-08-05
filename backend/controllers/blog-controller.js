@@ -6,7 +6,7 @@ export const getAllBlogsAdmin = async (req,res,next) => {
     let blogs
 
     try {
-        blogs = await Blog.find().populate("user")
+        blogs = await Blog.find().populate({ path: 'user', select: 'name' })
     } catch (error) {
         console.log(error);
     }
@@ -41,7 +41,7 @@ export const getAllBlogs = async (req,res,next) => {
                 {user: {$in: user.subscriptions}},
                 {user: user._id}
             ]
-        }).populate("user")
+        }).populate({ path: 'user', select: 'name' })
     } catch (error) {
         console.log(error);
     }

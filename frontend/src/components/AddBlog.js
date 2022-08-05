@@ -1,47 +1,63 @@
-import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
+import { Box, Button, InputLabel, TextField, Typography, Checkbox, FormControlLabel } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStyles } from "./utils";
 
 const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
+
 const AddBlog = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
+
   const [inputs, setInputs] = useState({
     title: "",
     description: "",
+    content: "",
     imageURL: "",
   });
-  const id = localStorage.getItem("userId");
 
-  const handleChange = (e) => {
+  const [premium, setPremium] = useState(false)
+
+  const handleChange = ({target}) => {
     setInputs((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [target.name]: target.value,
     }));
+  };
+
+  const handleCheck = () => {
+    setPremium(!premium)
   };
 
   const sendRequest = async () => {
     const res = await axios
-      .post(`http://localhost:2022/api/blog/${id}`, {
+      .post(`http://localhost:2022/api/blog/${userId}`, {
         title: inputs.title,
         description: inputs.description,
         content: inputs.content,
-        image: inputs.imageURL,
-        user: id,
+        premium,
+        img: inputs.imageURL,
       })
       .catch((err) => console.log(err));
+
     const data = await res.data;
+    console.log(data);
+
     return data;
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
     console.log(inputs);
+
     sendRequest()
       .then((data) => console.log(data))
-      .then(() => navigate("/blogs"));
+      .then(() => navigate("/myBlogs"));
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -67,6 +83,7 @@ const AddBlog = () => {
           >
             Post Your Blog
           </Typography>
+
           <InputLabel className={classes.font} sx={labelStyles}>
             Title
           </InputLabel>
@@ -78,6 +95,7 @@ const AddBlog = () => {
             margin="auto"
             variant="outlined"
           />
+
           <InputLabel className={classes.font} sx={labelStyles}>
             Description
           </InputLabel>
@@ -89,6 +107,7 @@ const AddBlog = () => {
             margin="auto"
             variant="outlined"
           />
+
           <InputLabel className={classes.font} sx={labelStyles}>
             Content
           </InputLabel>
@@ -100,6 +119,7 @@ const AddBlog = () => {
             margin="auto"
             variant="outlined"
           />
+
           <InputLabel className={classes.font} sx={labelStyles}>
             ImageURL
           </InputLabel>
@@ -111,6 +131,16 @@ const AddBlog = () => {
             margin="auto"
             variant="outlined"
           />
+
+          <FormControlLabel
+            label="Premium"
+            className={classes.font} 
+            sx={labelStyles}
+            control={
+              <Checkbox onClick={handleCheck} checked={premium} />
+            }
+          />
+
           <Button
             sx={{ mt: 2, borderRadius: 4 }}
             variant="contained"

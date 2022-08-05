@@ -26,12 +26,11 @@ const Blogs = () => {
         blogs.map((blog, index) => (
           <Blog
             id={blog._id}
-            //isUser={localStorage.getItem("userId") === blog.user}
             title={blog.title}
             content={blog.content}
             description={blog.description}
             imageURL={blog.img}
-            userName={blog.user.name}
+            user={blog.user}
           />
         ))}
     </div>

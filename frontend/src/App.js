@@ -8,16 +8,13 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Momo from "./components/Momo"
 import OAuth from "./components/OAuth";
-import Author from "./components/Author";
 
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "./store";
-import axios from "axios";
 
 import "./App.css";
-import Author from "./components/Author";
 
 function App() {
   const dispath = useDispatch();
@@ -48,10 +45,10 @@ function App() {
             <>
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/blogs/add" element={<AddBlog />} />
-              <Route path="/myBlogs" element={<UserBlogs />} />
+              <Route path="/myBlogs" element={<UserBlogs self={true}/>} />
+              <Route path="/user/:id" element={<UserBlogs self={false}/>} />
               <Route path="/blog/:id" element={<BlogDetail />} />
               <Route path="/momoTest" element={<Momo />} />
-              <Route path="/:id/blogs" element={<Author />} />
             </>
           )}
 

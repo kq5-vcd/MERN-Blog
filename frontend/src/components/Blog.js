@@ -15,12 +15,15 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useStyles } from "./utils";
-const Blog = ({ title, description, content, imageURL, premium, userName, isUser, id }) => {
+
+const Blog = ({ title, description, imageURL, user, isUser, id }) => {
   const classes = useStyles();
   const navigate = useNavigate();
+
   const handleEdit = () => {
     navigate(`/myBlogs/${id}`);
   };
+
   const deleteRequest = async () => {
     const res = await axios
       .delete(`http://localhost:2022/api/blog/${id}`)
@@ -28,6 +31,7 @@ const Blog = ({ title, description, content, imageURL, premium, userName, isUser
     const data = await res.data;
     return data;
   };
+
   const handleDelete = () => {
     deleteRequest()
       .then(() => navigate("/"))
@@ -87,16 +91,36 @@ const Blog = ({ title, description, content, imageURL, premium, userName, isUser
 
       <Box sx={{ display: 'flex', flexDirection: 'column', flex: 2}}>
         <CardContent sx={{ flex: '1 0 auto' }}>
-          <Typography gutterBottom component="div" variant="h5" fontSize={35}>
-            <a href={`http://localhost:3000/blog/${id}`} >{title}</a>
+          <Typography 
+            gutterBottom component="div" 
+            variant="h5" 
+            fontSize={35}
+            sx={{cursor: "pointer"}}
+            onClick={() => {
+              navigate(`/blog/${id}`)
+            }}
+          >
+            {title}
           </Typography>
           <br/><br/>
           <Typography variant="body1" color="text.secondary" component="div">
             {description}
           </Typography>
         </CardContent>
-        <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1, fontWeight : "Bold", fontSize : 20}}>
-          {"by " + userName}
+        <Box 
+          sx={{ display: 'flex', 
+                alignItems: 'center', 
+                pl: 1, 
+                pb: 1, 
+                fontWeight : "Bold", 
+                fontSize : 20,
+                cursor: "pointer"
+              }}
+          onClick={() => {
+            navigate(`/user/${user._id}`)
+          }}
+        >
+          {"by " + user.name}
         </Box>
       </Box>
       
