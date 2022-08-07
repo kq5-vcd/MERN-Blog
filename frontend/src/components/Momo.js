@@ -60,27 +60,32 @@ function Momo({authorId, authorName, amount}) {
                                 fontSize={55}
                                 textAlign='center'
                                 color='black'
-                                textWeight='bold'
             >
                 {amount} VND/month
             </DialogContentText>
             </DialogContent>
             <DialogContent>
             <DialogContentText id="alert-dialog-description" 
+                              fontSize={20}
+                              textAlign='center'
+                              fontFamily='Helvetica'
+                              color='black'
+                              fontWeight='bold'
+            >
+                  With this subcription, you will be entitled to:
+            </DialogContentText>
+            <DialogContentText id="alert-dialog-description" 
                                 fontSize={20}
                                 textAlign='center'
                                fontFamily='Helvetica'
             >
-                  With subscription, you will be entitled to :  <br/>
-
                   Exclusive blogs <br/>
                   Help blogger cover living expenses <br/>
                   Notification when have new blog
             </DialogContentText>
             </DialogContent>
-            <DialogActions>
-            <Button onClick={handleClose}> Cancel </Button>
-            <Button onClick={handleSubscribe} autoFocus sx={{backgroundColor: "red", color: "white", font:'bold'}}> Subscribe </Button>
+            <DialogActions sx={{justifyContent: 'center'}}>
+            <Button onClick={handleSubscribe}  autoFocus sx={{backgroundColor: "red", color: "white", font:'bold'}}> Subscribe </Button>
             </DialogActions>
     </Box>
   )
