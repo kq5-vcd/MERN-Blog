@@ -186,8 +186,10 @@ export const getByUserId = async (req,res,next) => {
             return count
         }, 0)
 
+        author.subscribed = userId === authorId || user.subscriptions.includes(authorId)
+
         const tempBlogs = author.blogs.filter((blog) => {
-            if(userId === authorId || user.subscriptions.includes(authorId)) return blog
+            if(author.subscribed) return blog
             else return !blog.premium
         })
 
@@ -205,7 +207,8 @@ export const getByUserId = async (req,res,next) => {
         _id: author._id,
         name: author.name,
         blogs: author.blogs,
-        premium: author.premium
+        premium: author.premium, 
+        subscribed: author.subscribed
     }})
 }
 
