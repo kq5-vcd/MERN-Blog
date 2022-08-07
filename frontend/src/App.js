@@ -6,7 +6,7 @@ import InputBlog from "./components/InputBlog";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Momo from "./components/Momo"
+import UserList from "./components/UserList";
 import OAuth from "./components/OAuth";
 
 import React, { useEffect } from "react";
@@ -40,6 +40,13 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login/:id" element={<OAuth />} />
+              <Route path="/blogs" element={<Register />} />
+              <Route path="/blogs/add" element={<Register />} />
+              <Route path="/myBlogs" element={<Register />} />
+              <Route path="/user/:id" element={<Register />} />
+              <Route path="/users" element={<Register />} />
+              <Route path="/blog/:id" element={<Register />} />
+              <Route path="/blog/edit/:id" element={<Register />} />
             </>
           ) : (
             <>
@@ -47,9 +54,9 @@ function App() {
               <Route path="/blogs/add" element={<InputBlog add={true}/>} />
               <Route path="/myBlogs" element={<UserBlogs self={true}/>} />
               <Route path="/user/:id" element={<UserBlogs self={false}/>} />
+              <Route path="/users" element={<UserList />} />
               <Route path="/blog/:id" element={<BlogDetail />} />
               <Route path="/blog/edit/:id" element={<InputBlog add={false}/>} />
-              <Route path="/momoTest" element={<Momo />} />
             </>
           )}
 
