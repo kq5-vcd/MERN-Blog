@@ -15,7 +15,7 @@ export const pay = async (req,res,next) => {
 
     const requestId = partnerCode + new Date().getTime();
     const orderId = requestId;
-    const redirectUrl = `http://localhost:3000`;
+    const redirectUrl = `http://localhost:2022/api/user/${userId}/subscribe/${authorId}`;
     const ipnUrl = `http://localhost:2022/api/momo/result`
 
     const rawSignature = `accessKey=${accessKey}&amount=${amount}&extraData=${extraData}&ipnUrl=${ipnUrl}&orderId=${orderId}&orderInfo=${orderInfo}&partnerCode=${partnerCode}&redirectUrl=${redirectUrl}&requestId=${requestId}&requestType=${requestType}`
@@ -54,14 +54,16 @@ export const pay = async (req,res,next) => {
         //console.log(`Status: ${res.statusCode}`);
         //console.log(`Headers: ${JSON.stringify(res.headers)}`);
         res.setEncoding('utf8');
+
+        let response = ""
         
         res.on('data', (body) => {
-            const payUrl = JSON.parse(body).payUrl
-            open(payUrl);
+            response += body
         });
 
-        res.on('end', () => {
-            console.log('No more data in response.');
+        res.on('end', async() => {
+            const payUrl = await JSON.parse(response).payUrl
+            open(payUrl);
         });
     })
         
@@ -76,6 +78,5 @@ export const pay = async (req,res,next) => {
 }
 
 export const result = async(req, res, next) => {
-    //`http://localhost:2022/api/user/${userId}/subscribe/${authorId}`;
     console.log("result: " + req)
 }

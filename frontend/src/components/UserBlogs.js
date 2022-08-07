@@ -10,13 +10,12 @@ const UserBlogs = ({self}) => {
   const params = useParams()
   const userId = localStorage.getItem("userId");
   const [subscribed, setSubscribed] = useState(false)
-  let id
 
   let url 
   if(self) {
     url = `http://localhost:2022/api/blog/${userId}/user/${userId}`
   } else {
-    id = params.id
+    const id = params.id
     url = `http://localhost:2022/api/blog/${userId}/user/${id}`
   }
 
@@ -45,6 +44,7 @@ const UserBlogs = ({self}) => {
       getSubscription()
       .then((data) => data.sub)
       .then((sub) => {
+        const id = params.id
         if(sub.includes(id) || id === userId) {
           setSubscribed(true)
         }
