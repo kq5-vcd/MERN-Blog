@@ -1,9 +1,10 @@
 import express from "express";
-import { getAllUsers,signup, login, subscribe, cancelSubscribe, getSubscriptions } from "../controllers/user-controller";
+import { getAllUsers, getUserList,signup, login, subscribe, cancelSubscribe, getSubscriptions } from "../controllers/user-controller";
 
 const userRouter = express.Router()
 
 userRouter.get("/", getAllUsers)
+userRouter.get("/users", getUserList)
 userRouter.post("/signup", signup)
 userRouter.post("/login", login)
 userRouter.get("/:id/subscribe/:subId", subscribe)

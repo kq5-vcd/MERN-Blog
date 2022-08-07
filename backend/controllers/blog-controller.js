@@ -41,7 +41,8 @@ export const getAllBlogs = async (req,res,next) => {
                 {user: {$in: user.subscriptions}},
                 {user: user._id}
             ]
-        }).populate({ path: 'user', select: 'name' })
+        }).populate({ path: 'user', select: 'name' })//.reverse()
+        blogs.reverse()
     } catch (error) {
         console.log(error);
     }
@@ -177,12 +178,21 @@ export const getByUserId = async (req,res,next) => {
     }  
 
     try {
-        if(userId === authorId || user.subscriptions.includes(authorId)) {
-            author = await User.findById(authorId).populate("blogs")
-        } else {
-            author = await User.findById(authorId).populate({path: "blogs", match: {premium: false}})
-        }
-        
+        //author = await User.findById(authorId).populate({path: "blogs", match: {premium: false}})
+        author = await User.findById(authorId).populate("blogs")
+
+        author.premium = author.blogs.reduce((count, blog) => {
+            if(blog.premium) return count + 1
+            return count
+        }, 0)
+
+        const tempBlogs = author.blogs.filter((blog) => {
+            if(userId === authorId || user.subscriptions.includes(authorId)) return blog
+            else return !blog.premium
+        })
+
+        author.blogs = tempBlogs
+
     } catch (error) {
         console.log(error);
     }
@@ -191,7 +201,12 @@ export const getByUserId = async (req,res,next) => {
         return res.status(404).json({message: "No author found."})
     }
 
-    return res.status(200).json({user: author})
+    return res.status(200).json({user: {
+        _id: author._id,
+        name: author.name,
+        blogs: author.blogs,
+        premium: author.premium
+    }})
 }
 
 export const deleteById = async (req,res,next) => {

@@ -17,6 +17,37 @@ export const getAllUsers = async (req,res,next) => {
     return res.status(200).json({users})
 }
 
+export const getUserList = async (req,res,next) => {
+    let users
+
+    try {
+        users = await User.find().populate("blogs")
+    } catch (error) {
+        console.log(error);
+    }
+
+    if(!users) {
+        return res.status(404).json({message: "No user found"})
+    }
+
+    const userList = users.map((user) => {
+        return {
+            _id: user._id,
+            name: user.name,
+            free: user.blogs.reduce((count, blog) => {
+                if(blog.premium) return count
+                return count + 1
+            }, 0),
+            premium: user.blogs.reduce((count, blog) => {
+                if(blog.premium) return count + 1
+                return count
+            }, 0)
+        }
+    })
+
+    return res.status(200).json({userList})
+}
+
 export const signup = async (req,res,next) => {
     const { name, email, password } = req.body
 
