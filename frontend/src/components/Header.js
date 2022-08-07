@@ -51,7 +51,7 @@ const Header = () => {
                 className={classes.font}
                 LinkComponent={Link}
                 to="/users"
-                label="Other Writers"
+                label="Writers"
               />
               <Tab
                 className={classes.font}
