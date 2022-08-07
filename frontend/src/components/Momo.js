@@ -1,6 +1,7 @@
 import { Button, Box, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material'
 import React from 'react'
 import axios from 'axios';
+import { red } from '@mui/material/colors';
 
 function Momo({authorId, authorName, amount}) {
     const [open, setOpen] = React.useState(false);
@@ -84,9 +85,7 @@ function Momo({authorId, authorName, amount}) {
                   Notification when have new blog
             </DialogContentText>
             </DialogContent>
-            <DialogActions sx={{justifyContent: 'center'}}>
-            <Button onClick={handleSubscribe}  autoFocus sx={{backgroundColor: "red", color: "white", font:'bold'}}> Subscribe </Button>
-            </DialogActions>
+            <Button onClick={handleSubscribe}  autoFocus  sx={{backgroundColor: "red", color: "white", font:'bold', '&:hover': {backgroundColor: '#ad221f'}}}> Subscribe </Button>
     </Box>
   )
 }
