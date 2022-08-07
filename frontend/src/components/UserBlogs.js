@@ -102,6 +102,8 @@ const UserBlogs = ({self}) => {
         </Paper>
       }
       
+      {!self && !subscribed && user &&  <Momo authorId={params.id} authorName={user.name} amount={20000}/>}
+
       {user &&
         user.blogs.map((blog, index) => (
           <Blog
@@ -115,8 +117,7 @@ const UserBlogs = ({self}) => {
           />
         ))
       }
-
-      {!self && !subscribed && user &&  <Momo authorId={params.id} authorName={user.name} amount={20000}/>}
+      
     </div>
   );
 };

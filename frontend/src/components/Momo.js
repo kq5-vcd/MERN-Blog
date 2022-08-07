@@ -41,19 +41,41 @@ function Momo({authorId, authorName, amount}) {
     <Box sx={{  display: 'flex', 
                 flexDirection: 'column',
                 boxShadow: 10,
-                width:1/4,
-                height:450,
+                width:1/2,
+                height:390,
                 margin: 'auto',
-                marginTop: 10,
+                marginTop: 1,
                 backgroundColor: 'White',
+                boxShadow: 15,
+                borderRadius: 3
             }}>
-            <DialogTitle id="alert-dialog-title">
-            {`Are you sure you want to subscribe to ${authorName}?`}
+            <DialogTitle id="alert-dialog-title" 
+                         textAlign='center'
+                         fontSize={25}
+            >
+            {`Subscribe to ${authorName}`}
             </DialogTitle>
             <DialogContent>
-            <DialogContentText id="alert-dialog-description" fontSize={40}>
-                <br/>
-                Total: {amount} VND
+            <DialogContentText id="alert-dialog-description" 
+                                fontSize={55}
+                                textAlign='center'
+                                color='black'
+                                textWeight='bold'
+            >
+                {amount} VND/month
+            </DialogContentText>
+            </DialogContent>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-description" 
+                                fontSize={20}
+                                textAlign='center'
+                               fontFamily='Helvetica'
+            >
+                  With subscription, you will be entitled to :  <br/>
+
+                  Exclusive blogs <br/>
+                  Help blogger cover living expenses <br/>
+                  Notification when have new blog
             </DialogContentText>
             </DialogContent>
             <DialogActions>
