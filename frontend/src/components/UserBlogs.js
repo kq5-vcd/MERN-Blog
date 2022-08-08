@@ -81,7 +81,7 @@ const UserBlogs = ({self}) => {
       {!self &&  user && !user.subscribed &&  <Momo authorId={params.id} authorName={user.name} amount={20000}/>}
 
       {user &&
-        user.blogs.map((blog, index) => (
+        user.blogs.reverse().map((blog, index) => (
           <Blog
             id={blog._id}
             key={index}
