@@ -193,7 +193,7 @@ export const getByUserId = async (req,res,next) => {
             else return !blog.premium
         })
 
-        author.blogs = tempBlogs
+        author.blogs = tempBlogs.reverse()
 
     } catch (error) {
         console.log(error);

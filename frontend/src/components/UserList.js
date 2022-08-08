@@ -65,9 +65,9 @@ function UserList() {
             <Table sx={{ minWidth: 400 }} aria-label="customized table">
                 <TableHead>
                     <TableRow>
-                        <StyledTableCell align="center">UserName</StyledTableCell>
-                        <StyledTableCell align="center">Number of free posts</StyledTableCell>
-                        <StyledTableCell align="center">Number of premium posts</StyledTableCell>
+                        <StyledTableCell align="center">User</StyledTableCell>
+                        <StyledTableCell align="center">Free Posts</StyledTableCell>
+                        <StyledTableCell align="center">Premium Posts</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 {users && users.map(user => (
