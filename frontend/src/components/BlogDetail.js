@@ -85,28 +85,7 @@ const BlogDetail = () => {
           flexDirection={"column"}
           width={"60%"}
         >
-          {self && (
-          <Box display="flex"
-          sx={{
-            mr:2,
-            flexDirection: "column",
-          }}>
-            <IconButton onClick={handleEdit} 
-            sx={{ 
-              marginLeft: "auto" ,
-              flex: 1
-            }}>
-              <ModeEditOutlineIcon color="warning" />
-            </IconButton>
-            <IconButton onClick={handleDelete}
-            sx={{
-              flex: 1,
-              marginLeft: "auto"
-            }}>
-              <DeleteForeverIcon color="error" />
-            </IconButton>
-          </Box>
-        )}
+          
         
           
           <Typography
@@ -116,7 +95,33 @@ const BlogDetail = () => {
             textAlign={"left"}
             paddingLeft={15}
           >
+            <box sx={{
+              display: "flex",
+              flexDirection: "row",
+            }}>
             {blog.title}
+            {self && (
+            <Box
+            sx={{
+              mr:2,
+            }}>
+              <IconButton onClick={handleEdit} 
+              sx={{ 
+                marginLeft: "auto" ,
+                flex: 1
+              }}>
+                <ModeEditOutlineIcon color="warning" />
+              </IconButton>
+              <IconButton onClick={handleDelete}
+              sx={{
+                flex: 1,
+                marginLeft: "auto"
+              }}>
+                <DeleteForeverIcon color="error" />
+              </IconButton>
+            </Box>
+          )}
+          </box>
           </Typography>
 
           <Typography
